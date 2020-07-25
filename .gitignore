@@ -1,0 +1,6 @@
+/packages/server/node_modules
+/packages/server/dump.rdb
+/packages/server/yarn-error.log
+/packages/server/.env
+
+/node_modules
