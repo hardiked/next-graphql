@@ -1,14 +1,17 @@
-import { Resolver, Mutation, Arg } from "type-graphql";
-import { UserModel } from "../../models/User";
-import { v4 } from "uuid";
+// lib
+import { Resolver, Mutation, Arg } from 'type-graphql';
+import { v4 } from 'uuid';
+
+// utils and models
 // import { SendEmail } from "../utils/SendEmail";
-import { createForgotPasswordToken } from "../utils/authUtils";
-import { ForgotPasswordModel } from "../../models/ForgotPassword";
+import { createForgotPasswordToken } from '../utils/authUtils';
+import { UserModel } from '../../models/User';
+import { ForgotPasswordModel } from '../../models/ForgotPassword';
 
 @Resolver()
-export class ForgotPasswordResolver {
+class ForgotPasswordResolver {
   @Mutation(() => Boolean)
-  async forgotPassword(@Arg("email") email: string): Promise<Boolean> {
+  async forgotPassword(@Arg('email') email: string): Promise<Boolean> {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
@@ -44,3 +47,5 @@ export class ForgotPasswordResolver {
     return true;
   }
 }
+
+export default ForgotPasswordResolver;

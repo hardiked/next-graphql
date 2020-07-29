@@ -1,4 +1,4 @@
-import { gCall } from "../../../test-utils/gCall";
+import gCall from '../../../test-utils/gCall';
 
 const meQuery = `
   query Me{
@@ -17,11 +17,12 @@ const meQuery = `
     }
   }`;
 
-export const callMeResolver = async (accessToken?: string) => {
-  return await gCall({
+const callMeResolver = async (accessToken?: string) =>
+  gCall({
     source: meQuery,
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
   });
-};
+
+export default callMeResolver;

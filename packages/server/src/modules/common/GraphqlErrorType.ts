@@ -1,13 +1,5 @@
-import { ObjectType, Field } from "type-graphql";
-
-@ObjectType()
-export class ErrorType {
-  @Field()
-  path: string;
-
-  @Field()
-  message: string;
-}
+import { ObjectType, Field } from 'type-graphql';
+import ErrorType from './GraphqlErrorObject';
 
 @ObjectType()
 class Error {

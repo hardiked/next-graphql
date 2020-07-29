@@ -5,6 +5,22 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "lint": "./packages/scripts/lint.sh",
+    "prettier-fix": "./packages/scripts/prettier.sh",
+    "validate": "./packages/scripts/runScripts.sh"
+  },
   "author": "hardik modi <hmodi2457@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn validate"
+    }
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "dependencies": {
+    "husky": "^4.2.5"
+  }
 }

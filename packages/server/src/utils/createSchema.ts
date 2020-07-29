@@ -1,6 +1,9 @@
-import { buildSchema } from "type-graphql";
+import { buildSchema } from 'type-graphql';
+import * as path from 'path';
 
-export const createSchema = async () =>
-  await buildSchema({
-    resolvers: [__dirname + "/../modules/*/*.ts"],
+const createSchema = async () =>
+  buildSchema({
+    resolvers: [path.join(__dirname, `/../modules/*/*.ts`)],
   });
+
+export default createSchema;

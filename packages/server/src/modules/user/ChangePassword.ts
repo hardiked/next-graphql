@@ -1,22 +1,29 @@
-import { Resolver, Mutation, Arg } from "type-graphql";
-import { UserModel } from "../../models/User";
-import { ForgotPasswordModel } from "../../models/ForgotPassword";
-import { ChangePasswordInput } from "./changePassword/ChangePasswordInput";
-import { verify } from "jsonwebtoken";
-import { hash } from "bcryptjs";
-import { revokeRefrehTokenForUser } from "../utils/authUtils";
-import Error from "../common/GraphqlErrorType";
-import composeErrorMessage from "../utils/composeErrorMessage";
-import { changePasswordValidationSchema } from "./changePassword/changePasswordValidationSchema";
-import { validateData } from "../../utils/validateData";
+// lib
+import { Resolver, Mutation, Arg } from 'type-graphql';
+import { verify } from 'jsonwebtoken';
+import { hash } from 'bcryptjs';
 
-//TODO: Login the user after password changed successfully..
+// utils
+import validateData from '../../utils/validateData';
+import { revokeRefrehTokenForUser } from '../utils/authUtils';
+import composeErrorMessage from '../utils/composeErrorMessage';
+
+// types and schemas
+import ChangePasswordInput from './changePassword/ChangePasswordInput';
+import changePasswordValidationSchema from './changePassword/changePasswordValidationSchema';
+import Error from '../common/GraphqlErrorType';
+
+// models
+import { ForgotPasswordModel } from '../../models/ForgotPassword';
+import { UserModel } from '../../models/User';
+
+// TODO: Login the user after password changed successfully..
 
 @Resolver()
-export class ChangePasswordResolver {
+class ChangePasswordResolver {
   @Mutation(() => Error, { nullable: true })
   async changePassword(
-    @Arg("data") data: ChangePasswordInput
+    @Arg('data') data: ChangePasswordInput
   ): Promise<Error | null> {
     // validate the input
     const error = await validateData(changePasswordValidationSchema, data);
@@ -31,8 +38,8 @@ export class ChangePasswordResolver {
     // Entry does not exist in the database user has not requested the reset password at all
     if (!forgotPasswordUser) {
       return composeErrorMessage(
-        "user",
-        "Something went wrong please try after some time"
+        'user',
+        'Something went wrong please try after some time'
       );
     }
 
@@ -46,8 +53,8 @@ export class ChangePasswordResolver {
       const user = await UserModel.findById(payload.userId);
       if (!user) {
         return composeErrorMessage(
-          "user",
-          "Something went wrong please try after some time"
+          'user',
+          'Something went wrong please try after some time'
         );
       }
       user.password = await hash(password, 12);
@@ -59,13 +66,15 @@ export class ChangePasswordResolver {
         revokeRefrehTokenForUser(user.id),
       ]);
       return null;
-    } catch (error) {
+    } catch (err) {
       // token is not valid
-      console.log(error);
+      console.log(err);
       return composeErrorMessage(
-        "user",
-        "Session expired please request new email"
+        'user',
+        'Session expired please request new email'
       );
     }
   }
 }
+
+export default ChangePasswordResolver;

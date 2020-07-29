@@ -1,7 +1,9 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType } from 'type-graphql';
 
 @InputType()
-export class PasswordInput {
+class PasswordInput {
   @Field()
   password: string;
 }
+
+export default PasswordInput;

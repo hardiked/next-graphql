@@ -1,7 +1,7 @@
-import { graphql, GraphQLSchema } from "graphql";
-import { createSchema } from "../utils/createSchema";
-import { Maybe } from "graphql/jsutils/Maybe";
-import { Response, CookieOptions } from "express";
+import { graphql, GraphQLSchema } from 'graphql';
+import { Response, CookieOptions } from 'express';
+import { Maybe } from 'graphql/jsutils/Maybe';
+import createSchema from '../utils/createSchema';
 
 interface Options {
   source: string;
@@ -17,11 +17,15 @@ interface Options {
 
 let schema: GraphQLSchema;
 
-export const gCall = async ({
+const gCall = async ({
   source,
   variableValues,
-  clearCookie = jest.fn(),
-  cookie = jest.fn(),
+  clearCookie = () => {
+    return {} as Response<any>;
+  },
+  cookie = () => {
+    return {} as Response<any>;
+  },
   headers,
 }: Options) => {
   if (!schema) {
@@ -42,3 +46,5 @@ export const gCall = async ({
     },
   });
 };
+
+export default gCall;

@@ -1,4 +1,4 @@
-import { gCall } from "../../../test-utils/gCall";
+import gCall from '../../../test-utils/gCall';
 
 const forgotPasswordMutation = `
   mutation ForgotPassword($email: String!){
@@ -6,10 +6,12 @@ const forgotPasswordMutation = `
   }
 `;
 
-export const callForgotPasswordResolver = async (email: string) =>
-  await gCall({
+const callForgotPasswordResolver = async (email: string) =>
+  gCall({
     source: forgotPasswordMutation,
     variableValues: {
       email,
     },
   });
+
+export default callForgotPasswordResolver;

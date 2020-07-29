@@ -1,7 +1,7 @@
-import { formatYupError } from "./formatYupError";
-import * as yup from "yup";
+import * as yup from 'yup';
+import formatYupError from './formatYupError';
 
-export const validateData = async <T extends object>(
+const validateData = async <T extends object>(
   validationSchema: yup.ObjectSchema<yup.Shape<object | undefined, T>>,
   data: T
 ) => {
@@ -12,3 +12,5 @@ export const validateData = async <T extends object>(
   }
   return false;
 };
+
+export default validateData;

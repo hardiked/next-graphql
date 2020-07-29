@@ -1,24 +1,31 @@
-import { Resolver, Mutation, Arg, UseMiddleware } from "type-graphql";
-import { UserModel } from "../../models/User";
-import { RegisterInput } from "./register/RegisterInput";
-import { hash } from "bcryptjs";
-import getGraphqlOutputType from "../utils/getGraphqlOutputType";
-import RegisterSuccess from "./register/RegisterSuccessOutput";
-import { isUsernameOrEmailAlreadyExist } from "./register/isUsernameOrEmailAlreadyExist";
-import { registerValidationSchema } from "./register/registerValidationSchema";
-import { validateData } from "../../utils/validateData";
+// lib
+import { Resolver, Mutation, Arg, UseMiddleware } from 'type-graphql';
+import { hash } from 'bcryptjs';
+
+// utils
+import validateData from '../../utils/validateData';
+import getGraphqlOutputType from '../utils/getGraphqlOutputType';
+
+// types, middleware and schema
+import RegisterInput from './register/RegisterInput';
+import RegisterSuccess from './register/RegisterSuccessOutput';
+import isUsernameOrEmailAlreadyExist from './register/isUsernameOrEmailAlreadyExist';
+import registerValidationSchema from './register/registerValidationSchema';
+
+// models
+import { UserModel } from '../../models/User';
 
 const RegisterResponse = getGraphqlOutputType<RegisterSuccess>({
   SuccessType: RegisterSuccess,
-  name: "Register",
+  name: 'Register',
 });
 
 @Resolver()
-export class RegisterResolver {
+class RegisterResolver {
   @Mutation(() => RegisterResponse)
   @UseMiddleware(isUsernameOrEmailAlreadyExist)
   async register(
-    @Arg("data") data: RegisterInput
+    @Arg('data') data: RegisterInput
   ): Promise<typeof RegisterResponse> {
     // validate the input
     const error = await validateData(registerValidationSchema, data);
@@ -37,3 +44,5 @@ export class RegisterResolver {
     return { user };
   }
 }
+
+export default RegisterResolver;

@@ -1,7 +1,8 @@
-import faker from "faker";
-import { UserModel } from "../../../models/User";
-import "../../../test-utils/oneTimeTestSetup";
-import { callRegisterResolver } from "../test-utils/callRegisterResolver";
+import faker from 'faker';
+import { UserModel } from '../../../models/User';
+import '../../../test-utils/oneTimeTestSetup';
+import callRegisterResolver from '../test-utils/callRegisterResolver';
+import '../Register';
 
 const checkUser = async (response: any, user: any) => {
   // compare response
@@ -25,23 +26,23 @@ const checkUser = async (response: any, user: any) => {
   expect(dbUser!.password).not.toEqual(user.password);
 };
 
-describe("#RegisterResolver", () => {
-  it("returns error when email is not valid", async () => {
+describe('#RegisterResolver', () => {
+  it('returns error when email is not valid', async () => {
     const response = await callRegisterResolver({
-      email: "test",
+      email: 'test',
       password: faker.internet.password(),
       username: faker.internet.userName(),
     });
     expect(response).toEqual({
       data: {
         register: {
-          error: [{ path: "email", message: "Email is not valid" }],
+          error: [{ path: 'email', message: 'Email is not valid' }],
         },
       },
     });
   });
 
-  it("returns error when email is already in use", async () => {
+  it('returns error when email is already in use', async () => {
     const email = faker.internet.email();
     await new UserModel({
       email,
@@ -58,13 +59,13 @@ describe("#RegisterResolver", () => {
     expect(response).toEqual({
       data: {
         register: {
-          error: [{ path: "email", message: "email already in use" }],
+          error: [{ path: 'email', message: 'Email already in use' }],
         },
       },
     });
   });
 
-  it("returns error when username is already in use", async () => {
+  it('returns error when username is already in use', async () => {
     const username = faker.internet.userName();
     await new UserModel({
       email: faker.internet.email(),
@@ -81,13 +82,13 @@ describe("#RegisterResolver", () => {
     expect(response).toEqual({
       data: {
         register: {
-          error: [{ path: "username", message: "username already in use" }],
+          error: [{ path: 'username', message: 'Username already in use' }],
         },
       },
     });
   });
 
-  it("returns error when password length is less than 5", async () => {
+  it('returns error when password length is less than 5', async () => {
     const response = await callRegisterResolver({
       email: faker.internet.email(),
       password: faker.internet.password(4),
@@ -98,8 +99,8 @@ describe("#RegisterResolver", () => {
         register: {
           error: [
             {
-              path: "password",
-              message: "Password must have at least 5 characters",
+              path: 'password',
+              message: 'Password must have at least 5 characters',
             },
           ],
         },
@@ -107,20 +108,20 @@ describe("#RegisterResolver", () => {
     });
   });
 
-  it("returns error when username is less than 3 characters long", async () => {
+  it('returns error when username is less than 3 characters long', async () => {
     // call the register mutation with the same email id
     const response = await callRegisterResolver({
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: "ts",
+      username: 'ts',
     });
     expect(response).toEqual({
       data: {
         register: {
           error: [
             {
-              path: "username",
-              message: "Username must have at least 3 characters",
+              path: 'username',
+              message: 'Username must have at least 3 characters',
             },
           ],
         },
@@ -128,25 +129,24 @@ describe("#RegisterResolver", () => {
     });
   });
 
-  it("returns all the errors in one go", async () => {
+  it('returns all the errors in one go', async () => {
     // call the register mutation with the same email id
     const response = await callRegisterResolver({
       email: faker.internet.email(),
       password: faker.internet.password(4),
-      username: "ts",
+      username: 'ts',
     });
-    console.log(response);
     expect(response).toEqual({
       data: {
         register: {
           error: [
             {
-              path: "password",
-              message: "Password must have at least 5 characters",
+              path: 'password',
+              message: 'Password must have at least 5 characters',
             },
             {
-              path: "username",
-              message: "Username must have at least 3 characters",
+              path: 'username',
+              message: 'Username must have at least 3 characters',
             },
           ],
         },
@@ -154,7 +154,7 @@ describe("#RegisterResolver", () => {
     });
   });
 
-  it("returns user when password is exactly 5 characters long", async () => {
+  it('returns user when password is exactly 5 characters long', async () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password(5),
@@ -166,7 +166,7 @@ describe("#RegisterResolver", () => {
     await checkUser(response, user);
   });
 
-  it("returns user when everything is valid", async () => {
+  it('returns user when everything is valid', async () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password(6),

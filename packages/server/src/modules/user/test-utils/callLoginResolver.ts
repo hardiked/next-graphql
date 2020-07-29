@@ -1,5 +1,5 @@
-import { gCall } from "../../../test-utils/gCall";
-import { CookieOptions, Response } from "express";
+import { CookieOptions, Response } from 'express';
+import gCall from '../../../test-utils/gCall';
 
 const loginMutation = `
 mutation Login($email: String!, $password: String!){
@@ -22,12 +22,12 @@ mutation Login($email: String!, $password: String!){
 }
 `;
 
-export const callLoginResolver = async (
+const callLoginResolver = async (
   email: string,
   password: string,
   cookie?: (name: string, val: string, options: CookieOptions) => Response<any>
 ) =>
-  await gCall({
+  gCall({
     source: loginMutation,
     variableValues: {
       email,
@@ -35,3 +35,5 @@ export const callLoginResolver = async (
     },
     cookie,
   });
+
+export default callLoginResolver;

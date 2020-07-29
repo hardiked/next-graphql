@@ -1,9 +1,10 @@
-import "../../../test-utils/oneTimeTestSetup";
-import faker from "faker";
-import { UserModel } from "../../../models/User";
-import { hash } from "bcryptjs";
-import { ForgotPasswordModel } from "../../../models/ForgotPassword";
-import { callForgotPasswordResolver } from "../test-utils/callForgotPasswordResolver";
+import { hash } from 'bcryptjs';
+import '../../../test-utils/oneTimeTestSetup';
+import faker from 'faker';
+import { UserModel } from '../../../models/User';
+import { ForgotPasswordModel } from '../../../models/ForgotPassword';
+import callForgotPasswordResolver from '../test-utils/callForgotPasswordResolver';
+import '../ForgotPassword';
 
 const registeredEmail = faker.internet.email();
 const password = faker.internet.password();
@@ -16,8 +17,8 @@ beforeAll(async () => {
   }).save();
 });
 
-describe("#ForgotPasswordResolver", () => {
-  it("returns false when email is not registered", async () => {
+describe('#ForgotPasswordResolver', () => {
+  it('returns false when email is not registered', async () => {
     const response = await callForgotPasswordResolver(faker.internet.email());
     expect(response).toEqual({
       data: {
@@ -26,7 +27,7 @@ describe("#ForgotPasswordResolver", () => {
     });
   });
 
-  it("returns true when email is registered", async () => {
+  it('returns true when email is registered', async () => {
     const response = await callForgotPasswordResolver(registeredEmail);
     expect(response).toEqual({
       data: {
@@ -35,7 +36,7 @@ describe("#ForgotPasswordResolver", () => {
     });
   });
 
-  it("makes only one entry in database on multiple request with same email id", async () => {
+  it('makes only one entry in database on multiple request with same email id', async () => {
     // first request for mail
     await callForgotPasswordResolver(registeredEmail);
     // second request for mail

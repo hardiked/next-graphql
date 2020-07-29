@@ -1,4 +1,4 @@
-import { gCall } from "../../../test-utils/gCall";
+import gCall from '../../../test-utils/gCall';
 
 const changePasswordMutation = `
 mutation ChangePassword($data: ChangePasswordInput!){
@@ -11,12 +11,12 @@ mutation ChangePassword($data: ChangePasswordInput!){
 }
 `;
 
-export const callChangePasswordResolver = async (
+const callChangePasswordResolver = async (
   password: string,
   confirmPassword: string,
   urlToken: string
 ) =>
-  await gCall({
+  gCall({
     source: changePasswordMutation,
     variableValues: {
       data: {
@@ -26,3 +26,5 @@ export const callChangePasswordResolver = async (
       },
     },
   });
+
+export default callChangePasswordResolver;

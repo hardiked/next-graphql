@@ -1,4 +1,4 @@
-import { gCall } from "../../../test-utils/gCall";
+import gCall from '../../../test-utils/gCall';
 
 const registerMutation = `
   mutation Register($data: RegisterInput!){
@@ -20,14 +20,16 @@ const registerMutation = `
   }
 `;
 
-export const callRegisterResolver = async (user: {
+const callRegisterResolver = async (user: {
   email: string;
   password: string;
   username: string;
 }) =>
-  await gCall({
+  gCall({
     source: registerMutation,
     variableValues: {
       data: user,
     },
   });
+
+export default callRegisterResolver;

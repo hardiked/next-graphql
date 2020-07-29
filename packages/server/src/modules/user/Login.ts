@@ -1,31 +1,36 @@
-import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
-import { UserModel } from "../../models/User";
-import { compare } from "bcryptjs";
-import getGraphqlOutputType from "../utils/getGraphqlOutputType";
-import LoginSuccess from "./login/LoginSuccessOutput";
-import composeErrorMessage from "../utils/composeErrorMessage";
-import { Context } from "../../types/Context";
-import { createAccessToken, sendRefreshToken } from "../utils/authUtils";
+// lib
+import { Resolver, Mutation, Arg, Ctx } from 'type-graphql';
+import { compare } from 'bcryptjs';
+
+// utils
+import getGraphqlOutputType from '../utils/getGraphqlOutputType';
+import composeErrorMessage from '../utils/composeErrorMessage';
+import { createAccessToken, sendRefreshToken } from '../utils/authUtils';
+
+// types and models
+import LoginSuccess from './login/LoginSuccessOutput';
+import { Context } from '../../types/Context';
+import { UserModel } from '../../models/User';
 
 const LoginResponse = getGraphqlOutputType<LoginSuccess>({
   SuccessType: LoginSuccess,
-  name: "Login",
+  name: 'Login',
 });
 
 @Resolver()
-export class LoginResolver {
+class LoginResolver {
   @Mutation(() => LoginResponse)
   async login(
-    @Arg("email") email: string,
-    @Arg("password") password: string,
+    @Arg('email') email: string,
+    @Arg('password') password: string,
     @Ctx() { res }: Context
   ): Promise<typeof LoginResponse> {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
       return composeErrorMessage(
-        "email",
-        "User with this email id does not exist"
+        'email',
+        'User with this email id does not exist'
       );
     }
 
@@ -33,8 +38,8 @@ export class LoginResolver {
 
     if (!isValid) {
       return composeErrorMessage(
-        "password",
-        "Password does not match with the email id provided"
+        'password',
+        'Password does not match with the email id provided'
       );
     }
 
@@ -46,3 +51,5 @@ export class LoginResolver {
     };
   }
 }
+
+export default LoginResolver;

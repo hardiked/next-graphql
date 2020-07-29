@@ -1,4 +1,4 @@
-import { dropTestDb, connectTestDb } from "./mongoTestSetupUtils";
+import { dropTestDb, connectTestDb } from './mongoTestSetupUtils';
 
 // connect and drop database before running any test
 // we will not clear database between tests

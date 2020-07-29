@@ -1,7 +1,7 @@
-import { prop as Property, getModelForClass, Ref } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
-import { Field, ObjectType, ID } from "type-graphql";
-import { User } from "./User";
+import { prop as Property, getModelForClass, Ref } from '@typegoose/typegoose';
+import { ObjectId } from 'mongodb';
+import { Field, ObjectType, ID } from 'type-graphql';
+import { User } from './User';
 
 @ObjectType()
 export class ForgotPassword {

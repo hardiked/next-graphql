@@ -1,4 +1,5 @@
-import { connectTestDb, closeDbConnection } from "./mongoTestSetupUtils";
+/* eslint-disable no-undef */
+import { connectTestDb, closeDbConnection } from './mongoTestSetupUtils';
 
 beforeAll(async () => {
   await connectTestDb();

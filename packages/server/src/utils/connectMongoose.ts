@@ -1,7 +1,7 @@
-import { connect } from "mongoose";
+import { connect } from 'mongoose';
 
-const connectMongo = async () =>
-  await connect("mongodb://localhost:27017/boilerplate", {
+const connectMongo = async (dbName: string) =>
+  connect(`mongodb://localhost:27017/${dbName}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
