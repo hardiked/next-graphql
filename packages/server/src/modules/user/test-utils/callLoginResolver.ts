@@ -1,39 +1,42 @@
 import { CookieOptions, Response } from 'express';
-import gCall from '../../../test-utils/gCall';
+import { createTestClient } from 'apollo-server-testing';
+import { gql } from 'apollo-server-express';
+import getApolloTestServer from '../../../test-utils/getApolloTestServer';
 
-const loginMutation = `
-mutation Login($email: String!, $password: String!){
-  login(email:$email, password: $password){
-    ...on Error{
-      error{
-        path
-        message
+const loginMutation = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      ... on Error {
+        error {
+          path
+          message
+        }
       }
-    }
-    ...on LoginSuccess{
-      accessToken
-      user{
-        _id
-        email
-        username
+      ... on LoginSuccess {
+        accessToken
+        user {
+          _id
+          email
+          username
+        }
       }
     }
   }
-}
 `;
 
 const callLoginResolver = async (
   email: string,
   password: string,
   cookie?: (name: string, val: string, options: CookieOptions) => Response<any>
-) =>
-  gCall({
-    source: loginMutation,
-    variableValues: {
+) => {
+  const server = await getApolloTestServer({ cookie });
+  const { mutate } = createTestClient(server as any);
+  return mutate({
+    mutation: loginMutation,
+    variables: {
       email,
       password,
     },
-    cookie,
   });
-
+};
 export default callLoginResolver;

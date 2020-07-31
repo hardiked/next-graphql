@@ -20,19 +20,15 @@ beforeAll(async () => {
 describe('#ForgotPasswordResolver', () => {
   it('returns false when email is not registered', async () => {
     const response = await callForgotPasswordResolver(faker.internet.email());
-    expect(response).toEqual({
-      data: {
-        forgotPassword: false,
-      },
+    expect(response.data).toEqual({
+      forgotPassword: false,
     });
   });
 
   it('returns true when email is registered', async () => {
     const response = await callForgotPasswordResolver(registeredEmail);
-    expect(response).toEqual({
-      data: {
-        forgotPassword: true,
-      },
+    expect(response.data).toEqual({
+      forgotPassword: true,
     });
   });
 

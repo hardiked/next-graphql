@@ -1,24 +1,28 @@
-import gCall from '../../../test-utils/gCall';
+import { gql } from 'apollo-server-express';
+import { createTestClient } from 'apollo-server-testing';
+import getApolloTestServer from '../../../test-utils/getApolloTestServer';
 
-const changePasswordMutation = `
-mutation ChangePassword($data: ChangePasswordInput!){
-  changePassword(data:$data){
-    error{
-      path
-      message
+const changePasswordMutation = gql`
+  mutation ChangePassword($data: ChangePasswordInput!) {
+    changePassword(data: $data) {
+      error {
+        path
+        message
+      }
     }
   }
-}
 `;
 
 const callChangePasswordResolver = async (
   password: string,
   confirmPassword: string,
   urlToken: string
-) =>
-  gCall({
-    source: changePasswordMutation,
-    variableValues: {
+) => {
+  const server = await getApolloTestServer();
+  const { mutate } = createTestClient(server as any);
+  return mutate({
+    mutation: changePasswordMutation,
+    variables: {
       data: {
         password,
         urlToken,
@@ -26,5 +30,5 @@ const callChangePasswordResolver = async (
       },
     },
   });
-
+};
 export default callChangePasswordResolver;

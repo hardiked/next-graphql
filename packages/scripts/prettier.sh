@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 EXTENSION_REGEX=".(js|jsx|json|yml|yaml|ts|tsx|md|graphql)$"
 

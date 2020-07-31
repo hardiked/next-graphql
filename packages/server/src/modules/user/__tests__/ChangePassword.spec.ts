@@ -40,16 +40,14 @@ describe('#ChangePasswordResolver', () => {
       newPassword,
       faker.random.alphaNumeric()
     );
-    expect(response).toEqual({
-      data: {
-        changePassword: {
-          error: [
-            {
-              path: 'user',
-              message: 'Something went wrong please try after some time',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      changePassword: {
+        error: [
+          {
+            path: 'user',
+            message: 'Something went wrong please try after some time',
+          },
+        ],
       },
     });
   });
@@ -61,16 +59,14 @@ describe('#ChangePasswordResolver', () => {
       newPassword,
       urlToken
     );
-    expect(response).toEqual({
-      data: {
-        changePassword: {
-          error: [
-            {
-              path: 'password',
-              message: 'Password must have at least 5 characters',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      changePassword: {
+        error: [
+          {
+            path: 'password',
+            message: 'Password must have at least 5 characters',
+          },
+        ],
       },
     });
   });
@@ -81,16 +77,14 @@ describe('#ChangePasswordResolver', () => {
       faker.internet.password(5),
       urlToken
     );
-    expect(response).toEqual({
-      data: {
-        changePassword: {
-          error: [
-            {
-              path: 'confirmPassword',
-              message: 'Both password need to be the same',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      changePassword: {
+        error: [
+          {
+            path: 'confirmPassword',
+            message: 'Both password need to be the same',
+          },
+        ],
       },
     });
   });
@@ -99,12 +93,10 @@ describe('#ChangePasswordResolver', () => {
   it('changes password and able to login with new password', async () => {
     // check user is able to login with his old email and password
     const loginResponse = await callLoginResolver(registeredEmail, password);
-    expect(loginResponse).toMatchObject({
-      data: {
-        login: {
-          user: {
-            email: registeredEmail,
-          },
+    expect(loginResponse.data).toMatchObject({
+      login: {
+        user: {
+          email: registeredEmail,
         },
       },
     });
@@ -116,24 +108,20 @@ describe('#ChangePasswordResolver', () => {
       newPassword,
       urlToken
     );
-    expect(changePasswordResponse).toEqual({
-      data: {
-        changePassword: null,
-      },
+    expect(changePasswordResponse.data).toEqual({
+      changePassword: null,
     });
 
     // does not allow login with old password
     const oldLoginResponse = await callLoginResolver(registeredEmail, password);
-    expect(oldLoginResponse).toEqual({
-      data: {
-        login: {
-          error: [
-            {
-              path: 'password',
-              message: 'Password does not match with the email id provided',
-            },
-          ],
-        },
+    expect(oldLoginResponse.data).toEqual({
+      login: {
+        error: [
+          {
+            path: 'password',
+            message: 'Password does not match with the email id provided',
+          },
+        ],
       },
     });
 
@@ -142,12 +130,10 @@ describe('#ChangePasswordResolver', () => {
       registeredEmail,
       newPassword
     );
-    expect(newLoginResponse).toMatchObject({
-      data: {
-        login: {
-          user: {
-            email: registeredEmail,
-          },
+    expect(newLoginResponse.data).toMatchObject({
+      login: {
+        user: {
+          email: registeredEmail,
         },
       },
     });

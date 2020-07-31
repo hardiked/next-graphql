@@ -33,11 +33,9 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(),
       username: faker.internet.userName(),
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [{ path: 'email', message: 'Email is not valid' }],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [{ path: 'email', message: 'Email is not valid' }],
       },
     });
   });
@@ -56,11 +54,9 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(),
       username: faker.internet.userName(),
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [{ path: 'email', message: 'Email already in use' }],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [{ path: 'email', message: 'Email already in use' }],
       },
     });
   });
@@ -79,11 +75,9 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(),
       username,
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [{ path: 'username', message: 'Username already in use' }],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [{ path: 'username', message: 'Username already in use' }],
       },
     });
   });
@@ -94,16 +88,14 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(4),
       username: faker.internet.userName(),
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [
-            {
-              path: 'password',
-              message: 'Password must have at least 5 characters',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [
+          {
+            path: 'password',
+            message: 'Password must have at least 5 characters',
+          },
+        ],
       },
     });
   });
@@ -115,16 +107,14 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(),
       username: 'ts',
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [
-            {
-              path: 'username',
-              message: 'Username must have at least 3 characters',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [
+          {
+            path: 'username',
+            message: 'Username must have at least 3 characters',
+          },
+        ],
       },
     });
   });
@@ -136,20 +126,18 @@ describe('#RegisterResolver', () => {
       password: faker.internet.password(4),
       username: 'ts',
     });
-    expect(response).toEqual({
-      data: {
-        register: {
-          error: [
-            {
-              path: 'password',
-              message: 'Password must have at least 5 characters',
-            },
-            {
-              path: 'username',
-              message: 'Username must have at least 3 characters',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      register: {
+        error: [
+          {
+            path: 'password',
+            message: 'Password must have at least 5 characters',
+          },
+          {
+            path: 'username',
+            message: 'Username must have at least 3 characters',
+          },
+        ],
       },
     });
   });

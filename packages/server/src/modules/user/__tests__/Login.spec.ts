@@ -23,16 +23,14 @@ describe('#LoginResolver', () => {
       faker.internet.email(),
       faker.internet.password()
     );
-    expect(response).toEqual({
-      data: {
-        login: {
-          error: [
-            {
-              path: 'email',
-              message: 'User with this email id does not exist',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      login: {
+        error: [
+          {
+            path: 'email',
+            message: 'User with this email id does not exist',
+          },
+        ],
       },
     });
   });
@@ -42,25 +40,23 @@ describe('#LoginResolver', () => {
       registeredEmail,
       faker.internet.password()
     );
-    expect(response).toEqual({
-      data: {
-        login: {
-          error: [
-            {
-              path: 'password',
-              message: 'Password does not match with the email id provided',
-            },
-          ],
-        },
+    expect(response.data).toEqual({
+      login: {
+        error: [
+          {
+            path: 'password',
+            message: 'Password does not match with the email id provided',
+          },
+        ],
       },
     });
   });
 
   it('returns user and access token when login with correct combination and me query returns correct user on login', async () => {
-    const cookie = jest.fn();
-    const response = await callLoginResolver(registeredEmail, password, cookie);
+    // const cookie = jest.fn();
+    const response = await callLoginResolver(registeredEmail, password);
     const { accessToken } = response.data!.login;
-    expect(cookie).toBeCalled();
+    // expect(cookie).toBeCalled();
     expect(response).toMatchObject({
       data: {
         login: {
@@ -68,7 +64,7 @@ describe('#LoginResolver', () => {
         },
       },
     });
-
+    console.log(response.http);
     // test meresolvers returns correct user
     const user = await callMeResolver(accessToken);
     expect(user.data!.me.email).toEqual(registeredEmail);
