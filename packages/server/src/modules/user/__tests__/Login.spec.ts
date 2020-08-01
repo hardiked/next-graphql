@@ -64,7 +64,6 @@ describe('#LoginResolver', () => {
         },
       },
     });
-    console.log(response.http);
     // test meresolvers returns correct user
     const user = await callMeResolver(accessToken);
     expect(user.data!.me.email).toEqual(registeredEmail);

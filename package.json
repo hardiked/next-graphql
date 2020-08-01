@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/server",
+    "packages/scripts"
   ],
   "scripts": {
     "lint": "./packages/scripts/lint.sh",
     "prettier-fix": "./packages/scripts/prettier.sh",
-    "validate": "./packages/scripts/runScripts.sh"
+    "validate": "./packages/scripts/runScripts.sh",
+    "test": "jest",
+    "test:related": "./packages/scripts/runRelatedTests.sh",
+    "test:coverage": "jest --coverage"
   },
   "author": "hardik modi <hmodi2457@gmail.com>",
   "license": "MIT",
@@ -18,7 +22,14 @@
     }
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "@types/jest": "^26.0.7",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "jest": "^26.2.1",
+    "prettier": "2.0.5",
+    "ts-jest": "^26.1.4"
   },
   "dependencies": {
     "husky": "^4.2.5"

@@ -4,3 +4,4 @@
 /packages/server/.env
 
 /node_modules
+/coverage
