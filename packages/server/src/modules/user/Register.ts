@@ -1,5 +1,5 @@
 // lib
-import { Resolver, Mutation, Arg, UseMiddleware } from 'type-graphql';
+import { Resolver, Mutation, Arg, UseMiddleware, Query } from 'type-graphql';
 import { hash } from 'bcryptjs';
 
 // utils
@@ -22,6 +22,11 @@ const RegisterResponse = getGraphqlOutputType<RegisterSuccess>({
 
 @Resolver()
 class RegisterResolver {
+  @Query(() => String)
+  hello() {
+    return 'hello';
+  }
+
   @Mutation(() => RegisterResponse)
   @UseMiddleware(isUsernameOrEmailAlreadyExist)
   async register(

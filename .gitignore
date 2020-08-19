@@ -7,3 +7,9 @@
 /node_modules
 /coverage
 .DS_Store
+
+/packages/web/node_modules
+
+packages/next-web/node_modules
+packages/next-web/.next
+packages/next-web/build

@@ -1,9 +1,4 @@
-/packages/server/node_modules
-/packages/server/dump.rdb
-/packages/server/yarn-error.log
-/packages/server/.env
-/packages/.DS_Store
-
 /node_modules
 /coverage
 .DS_Store
+/packages/next-web/src/generated/graphql.tsx

@@ -4,7 +4,9 @@
   "private": true,
   "workspaces": [
     "packages/server",
-    "packages/scripts"
+    "packages/scripts",
+    "packages/web",
+    "packages/next-web"
   ],
   "scripts": {
     "lint": "./packages/scripts/lint.sh",
@@ -27,6 +29,7 @@
     "@typescript-eslint/parser": "^3.7.1",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "jest": "^26.2.1",
     "prettier": "2.0.5",
     "ts-jest": "^26.1.4"

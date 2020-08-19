@@ -31,7 +31,6 @@ else
 
         yarn prettier ${CHANGED_FILES} --list-different --write
 
-        git add ${CHANGED_FILES}
         exit 1
     else
         printf "${GREEN}Everything is pretty ${PASS_EMOJI} ${RESET}\n"

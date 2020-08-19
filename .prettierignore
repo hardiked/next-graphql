@@ -5,3 +5,6 @@
 
 /node_modules
 /coverage
+
+/packages/next-web/node_modules
+packages/next-web/.next

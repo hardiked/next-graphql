@@ -85,7 +85,7 @@ const main = async () => {
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () =>
     console.log('🚀 Server started on http://localhost:4000/graphql')
